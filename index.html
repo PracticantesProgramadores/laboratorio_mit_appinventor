@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de Diseño de Apps | Cibercolegio UCN</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <img src="logo-ciber-ucn.png" class="brand-logo" alt="Ciber UCN logo in a branded mobile app design workspace header">
+        <div>
+          <strong>AppLab MIT APP Inventor</strong>
+          <span>Laboratorio de Diseño Móvil</span>
+        </div>
+      </div>
+
+      <nav class="theme-tabs" aria-label="Temas del laboratorio">
+        <button class="theme-tab active" data-theme="1">Tema 1 <span>GUI</span></button>
+        <button class="theme-tab locked" data-theme="2">Tema 2 <span>Color</span></button>
+        <button class="theme-tab locked" data-theme="3">Tema 3 <span>Prototipo</span></button>
+      </nav>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="saveBtn" title="Guardar progreso">💾</button>
+        <button class="icon-btn" id="previewBtn" title="Vista previa">▶</button>
+        <button class="primary-btn" id="startBtn">Comenzar laboratorio</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="left-panel">
+        <section class="panel-block">
+          <div class="panel-heading">
+            <span>Componentes</span>
+            <small>Arrastra al celular</small>
+          </div>
+          <div class="component-list" id="componentList"></div>
+        </section>
+
+        <section class="panel-block">
+          <div class="panel-heading">
+            <span>Herramientas</span>
+            <small>Diseño visual</small>
+          </div>
+          <div class="tool-grid">
+            <button class="tool-btn" id="wireframeBtn">▦ Wireframe</button>
+            <button class="tool-btn" id="mockupBtn">◩ Mockup</button>
+            <button class="tool-btn" id="shuffleBtn">⇄ Desordenar</button>
+            <button class="tool-btn" id="resetBtn">↺ Reiniciar</button>
+          </div>
+        </section>
+
+        <section class="panel-block compact">
+          <div class="panel-heading">
+            <span>Insignias</span>
+            <small id="badgeCount">0/3</small>
+          </div>`
+          <div class="badges" id="badges"></div>
+        </section>
+      </aside>
+
+      <section class="stage">
+        <div class="hero-lab" id="homeScreen">
+          <div class="floating-card intro-card">
+            <span class="eyebrow">Simulador educativo</span>
+            <h1>Diseña una app como en un laboratorio profesional</h1>
+            <p>Explora componentes, corrige errores visuales y construye un prototipo navegable con retos progresivos.</p>
+            <button class="primary-btn large" id="heroStartBtn">Comenzar laboratorio</button>
+          </div>
+          <div class="topic-cards">
+            <article class="topic-card unlocked" data-theme-card="1">
+              <span>01</span>
+              <h3>Interfaz gráfica</h3>
+              <p>Construye una pantalla móvil básica y aprende jerarquía visual.</p>
+            </article>
+            <article class="topic-card" data-theme-card="2">
+              <span>02</span>
+              <h3>Color e imagen</h3>
+              <p>Evalúa contraste, proporción y accesibilidad.</p>
+            </article>
+            <article class="topic-card" data-theme-card="3">
+              <span>03</span>
+              <h3>Componentes y prototipo</h3>
+              <p>Conecta pantallas y simula navegación real.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="lab-stage hidden" id="labStage">
+          <div class="challenge-strip">
+            <div>
+              <span class="eyebrow" id="themeLabel">Tema 1</span>
+              <h2 id="challengeTitle">Arrastra correctamente un header</h2>
+              <p id="challengeInstruction">Coloca el encabezado en la parte superior de la pantalla móvil.</p>
+            </div>
+            <div class="progress-widget">
+              <div class="score-pill"><span id="xpValue">0</span> XP</div>
+              <div class="stars" id="stars">☆☆☆</div>
+              <div class="progress-track"><div id="progressFill"></div></div>
+            </div>
+          </div>
+
+          <div class="phone-zone">
+            <button class="screen-switch" id="screenOneBtn">Pantalla 1</button>
+            <button class="screen-switch" id="screenTwoBtn">Pantalla 2</button>
+            <div class="phone-frame" id="phoneFrame">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen" id="phoneScreen" aria-label="Lienzo móvil"></div>
+              <div class="phone-home"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right-panel">
+        <section class="panel-block">
+          <div class="panel-heading">
+            <span>Reto activo</span>
+            <small id="challengeIndex">1/5</small>
+          </div>
+          <div class="challenge-card">
+            <h3 id="rightChallengeTitle">Interfaz gráfica</h3>
+            <p id="rightChallengeText">Pulsa comenzar para activar la primera misión.</p>
+            <button class="secondary-btn" id="hintBtn">Pista</button>
+            <button class="primary-btn full" id="validateBtn">Validar reto</button>
+          </div>
+          <div class="feedback" id="feedback">Tu tutor de diseño aparecerá aquí.</div>
+        </section>
+
+        <section class="panel-block">
+          <div class="panel-heading">
+            <span>Propiedades</span>
+            <small id="selectedName">Nada seleccionado</small>
+          </div>
+          <div class="properties" id="propertiesPanel">
+            <div class="position-tools">
+              <button class="mini-btn" id="moveUpBtn" title="Subir componente">↑</button>
+              <button class="mini-btn" id="moveDownBtn" title="Bajar componente">↓</button>
+              <button class="mini-btn" id="narrowBtn" title="Ancho medio">↔</button>
+              <button class="mini-btn" id="wideBtn" title="Ancho completo">⤢</button>
+            </div>
+            <label>Color principal
+              <input type="color" id="colorPicker" value="#2fbf71">
+            </label>
+            <label>Color de texto
+              <input type="color" id="textColorPicker" value="#ffffff">
+            </label>
+            <label>Tamaño táctil
+              <input type="range" id="sizeRange" min="28" max="72" value="48">
+            </label>
+            <label>Texto
+              <input type="text" id="textInput" value="Continuar">
+            </label>
+            <div class="palette-lab">
+              <div class="property-title">Colorimetría guiada</div>
+              <div class="palette-swatches" id="paletteSwatches"></div>
+              <label>Matiz HSL
+                <input type="range" id="hueRange" min="0" max="360" value="145">
+              </label>
+              <label>Saturación HSL
+                <input type="range" id="satRange" min="20" max="100" value="58">
+              </label>
+              <label>Luminosidad HSL
+                <input type="range" id="lightRange" min="18" max="88" value="47">
+              </label>
+              <div class="color-readout" id="colorReadout">HSL 145 58% 47% · CMYK 75 0 41 25</div>
+            </div>
+            <div class="image-lab">
+              <div class="property-title">Integración de imagen</div>
+              <label>Insertar imagen
+                <input type="file" id="imageInput" accept="image/*">
+              </label>
+              <div class="segmented">
+                <button class="mini-btn active" id="coverBtn">Cover</button>
+                <button class="mini-btn" id="containBtn">Contain</button>
+              </div>
+              <label>Altura de imagen
+                <input type="range" id="imageHeightRange" min="90" max="230" value="132">
+              </label>
+              <label>Foco horizontal
+                <input type="range" id="imageFocusX" min="0" max="100" value="50">
+              </label>
+              <label>Foco vertical
+                <input type="range" id="imageFocusY" min="0" max="100" value="50">
+              </label>
+            </div>
+            <div class="ux-meter">
+              <span>Medidor UX</span>
+              <strong id="uxScore">72</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-block">
+          <div class="panel-heading">
+            <span>Prueba automática</span>
+            <small>Accesibilidad</small>
+          </div>
+          <ul class="checks" id="checks">
+            <li>Contraste: pendiente</li>
+            <li>Tamaño táctil: pendiente</li>
+            <li>Navegación: pendiente</li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>Developed by Mary J. Galeano</span>
+      <span>Ahora sabes cómo se diseña una aplicación móvil desde la interfaz hasta el prototipo.</span>
+    </footer>
+  </div>
+
+  <dialog class="preview-modal" id="previewModal">
+    <div class="modal-head">
+      <strong>Vista previa móvil</strong>
+      <button class="icon-btn" id="closePreview">✕</button>
+    </div>
+    <div class="preview-body">
+      <div class="phone-frame mini">
+        <div class="phone-speaker"></div>
+        <div class="phone-screen" id="previewScreen"></div>
+        <div class="phone-home"></div>
+      </div>
+      <div class="preview-report">
+        <h3>Evaluación UX</h3>
+        <p id="previewReport">Completa retos para recibir evaluación automática.</p>
+        <div class="certificate hidden" id="certificate">
+          <strong>Insignia final desbloqueada</strong>
+          <span>Diseñador UX Junior</span>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
